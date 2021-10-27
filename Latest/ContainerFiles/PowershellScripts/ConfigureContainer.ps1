@@ -44,16 +44,30 @@ if ($arr.ExitCode -ne 0)
     Write-Host("Error occured while installing URL Rewrite, please refer to C:\ApplicationRequestRouting.log inside the container for more details")
 }
 
+# Configuring MS-DTC for cross DB transactions
+filter timestamp {"$(Get-Date -Format G): $_"}
+try {   
+   write-output "Enable MS DTC" | timestamp
+   Set-DtcNetworkSetting -DtcName "Local" -AuthenticationLevel "NoAuth" -InboundTransactionsEnabled $true -OutboundTransactionsEnabled $true -RemoteClientAccessEnabled $true -RemoteAdministrationAccessEnabled $true  -XATransactionsEnabled $true -LUTransactionsEnabled $true -Confirm:$false
+   
+   # Display network settings
+   $dtcSettings = Get-DtcNetworkSetting
+   write-output $dtcSettings
+}
+catch {
+  write-output "Error Setting MSDTC Settings" | timestamp
+}
+
 # Install TA in silent mode
 filter timestamp {"$(Get-Date -Format G): $_"}
 write-output "Start silent Install" | timestamp
 
 # -passthru is used to get output from the command
-if(Test-Path -path "C:\KTA\TotalAgility\TotalAgilityInstall\setup.exe") {
-$proc = Start-Process C:\KTA\TotalAgility\TotalAgilityInstall\setup.exe -argumentlist '/silent' -wait -PassThru
+if(Test-Path -path "C:\KTA\TotalAgilityInstall\setup.exe") {
+$proc = Start-Process C:\KTA\TotalAgilityInstall\setup.exe -argumentlist '/silent' -wait -PassThru
 
 # Copying Encrypt utility to powershellscripts folder
-Copy-Item "C:\KTA\TotalAgility\Utilities\Kofax.CEBPM.EncryptConfig.exe" "C:\KTA\PowershellScripts\Kofax.CEBPM.EncryptConfig.exe"
+Copy-Item "C:\KTA\Utilities\Kofax.CEBPM.EncryptConfig.exe" "C:\KTA\PowershellScripts\Kofax.CEBPM.EncryptConfig.exe"
 }
 elseif(Test-Path -path "C:\KTA\OnPremiseMultiTenancyInstall\setup.exe") {
 $proc = Start-Process C:\KTA\OnPremiseMultiTenancyInstall\setup.exe -argumentlist '/silent' -wait -PassThru

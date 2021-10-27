@@ -113,7 +113,7 @@ Param ([string]$searchKey)
 				$authenticationScheme="Anonymous";
 			}
 			# List of bindings that should not be modified
-			[string[]]$excludedBindings= @("BasicHttpBinding_ExchangeNotificationService","BasicHttpStreamingBinding_Service","BasicHttpBinding_DeviceManagerService","BasicHttpBinding_SharepointCommunicatorService","BasicHttpBinding_TrimCommunicatorService","BasicHttpBinding_DynamicsAxCommunicatorService","BasicHttpBinding_DynamicsAxIntegrationService","BasicHttpBinding_InsightDataService","WebHttpBinding_DeviceManagerService","TransformationServerExternalService_Binding");
+			[string[]]$excludedBindings= @("BasicHttpBinding_ExchangeNotificationService","BasicHttpBinding_DeviceManagerService","BasicHttpBinding_SharepointCommunicatorService","BasicHttpBinding_TrimCommunicatorService","BasicHttpBinding_DynamicsAxCommunicatorService","BasicHttpBinding_DynamicsAxIntegrationService","BasicHttpBinding_InsightDataService","WebHttpBinding_DeviceManagerService","TransformationServerExternalService_Binding");
 			# List of Integration Service bindings
 			[string[]]$integraionServiceBindings= @("BasicHttpBinding_ExchangeNotificationService","BasicHttpBinding_SharepointCommunicatorService","BasicHttpBinding_TrimCommunicatorService","BasicHttpBinding_DynamicsAxCommunicatorService","BasicHttpBinding_DynamicsAxIntegrationService","BasicHttpBinding_InsightDataService");			
             $integrationsModified= $FALSE;
@@ -200,7 +200,7 @@ Param ([string]$searchKey)
 							$nameAtt3=$doc.CreateAttribute("maxBufferSize");
 							$nameAtt4=$doc.CreateAttribute("maxReceivedMessageSize");
 							$nameAtt5=$doc.CreateAttribute("maxBufferPoolSize");
-							$nameAtt1.psbase.value="Negotiate";
+							$nameAtt1.psbase.value=$authenticationScheme;
 							$nameAtt2.psbase.value="true";
 							$nameAtt3.psbase.value="2147483647";
 							$nameAtt4.psbase.value="2147483647";
@@ -249,7 +249,8 @@ Param ([string]$searchKey)
 				{   
                     if($node.name -eq "Agility.Sdk.Services.StreamingService" -or 
                         $node.name -eq "Agility.Sdk.Services.PackageStreamingService" -or 
-                        $node.name -eq "Agility.Server.Core.Services.StreamingService")
+                        $node.name -eq "Agility.Server.Core.Services.StreamingService" -or
+						$node.name -eq "Agility.Sdk.Services.CaptureStreamingService")
                     {
 
 					    $baseAddressesExists = $node.host.baseAddresses;
