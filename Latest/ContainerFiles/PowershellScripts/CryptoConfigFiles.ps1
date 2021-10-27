@@ -18,7 +18,7 @@ $LicenseServerDir = "C:\Program Files (x86)\Kofax\TotalAgility\LicenseServer"
 
 $keyFileExportLocation_Const = "c:\KTA\PowerShellScripts\"
 $keyFileName_Const = "totalAgilityKeysFile.xml"
-$frameworkLocation_Const = "C:\windows\Microsoft.Net\Framework\v4.0.30319\"
+$frameworkLocation_Const = "C:\windows\Microsoft.Net\Framework64\v4.0.30319\"
 
 
 $agilityServerWebDir = $installationDir + "Agility.Server.Web"

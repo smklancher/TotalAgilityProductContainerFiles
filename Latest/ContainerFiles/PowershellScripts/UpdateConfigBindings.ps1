@@ -47,6 +47,8 @@ Param ([string]$searchKey)
         # construct config file's full path
 
         $currentFileName =$key.Substring(0,$pos);
+
+        $currentFileName = $currentFileName.Replace("--","\");
 		
 		# Fixing whitespace issue with Transformation Server install location
 		
@@ -112,6 +114,13 @@ Param ([string]$searchKey)
 			}
 			# List of bindings that should not be modified
 			[string[]]$excludedBindings= @("BasicHttpBinding_ExchangeNotificationService","BasicHttpStreamingBinding_Service","BasicHttpBinding_DeviceManagerService","BasicHttpBinding_SharepointCommunicatorService","BasicHttpBinding_TrimCommunicatorService","BasicHttpBinding_DynamicsAxCommunicatorService","BasicHttpBinding_DynamicsAxIntegrationService","BasicHttpBinding_InsightDataService","WebHttpBinding_DeviceManagerService","TransformationServerExternalService_Binding");
+			# List of Integration Service bindings
+			[string[]]$integraionServiceBindings= @("BasicHttpBinding_ExchangeNotificationService","BasicHttpBinding_SharepointCommunicatorService","BasicHttpBinding_TrimCommunicatorService","BasicHttpBinding_DynamicsAxCommunicatorService","BasicHttpBinding_DynamicsAxIntegrationService","BasicHttpBinding_InsightDataService");			
+            $integrationsModified= $FALSE;
+            if($integraionServiceBindings.Contains($appSetting.key))
+            {
+               $integrationsModified = $TRUE; 
+            }
 			$exists1 = $doc.configuration.'system.web'.httpCookies;
 			if ($exists1 -and -not ([System.Convert]::ToBoolean([string]::IsNullOrEmpty($SslEnabled))))
 			{
@@ -119,8 +128,8 @@ Param ([string]$searchKey)
 				$doc.configuration.'system.web'.httpCookies.SetAttribute("requireSSL",$SslEnabled)
 			}
 			$exists2 = $doc.configuration.'system.serviceModel'.bindings.basicHttpBinding;
-						if ($exists2 -and -not ([System.Convert]::ToBoolean([string]::IsNullOrEmpty($SslEnabled))) -and -not ([System.Convert]::ToBoolean([string]::IsNullOrEmpty($AuthenticationMode))))
-						{
+			if (($exists2 -and -not ([System.Convert]::ToBoolean([string]::IsNullOrEmpty($SslEnabled))) -and -not ([System.Convert]::ToBoolean([string]::IsNullOrEmpty($AuthenticationMode)))) -or $integrationsModified)
+			{
 			# Array of basicHttpBindings and webHttpBindings
 			$bindingsList=@($doc.configuration.'system.serviceModel'.bindings.basicHttpBinding.binding,$doc.configuration.'system.serviceModel'.bindings.webHttpBinding.binding);
 			# Array of customBindings
@@ -130,22 +139,37 @@ Param ([string]$searchKey)
 			{
 				foreach($node in $bindings)
 				{   
-					# Exclduing the bindings which are not to be modified
-					if(-not $excludedBindings.Contains($node.name))
+					if($integraionServiceBindings.Contains($node.name))
 					{
-						$exists3 = $node.security;
+						if($appSetting.key -eq $node.name)
+						{
+							if([System.Convert]::ToBoolean($appSetting.value))
+							{
+								$node.security.SetAttribute("mode","Transport");
+							}
+							else
+							{
+								$node.security.SetAttribute("mode","TransportCredentialOnly");
+							}
+							$modified = $TRUE;
+						}
+					}
+					# Exclduing the bindings which are not to be modified
+					if(-not $excludedBindings.Contains($node.name)-and -not ([System.Convert]::ToBoolean([string]::IsNullOrEmpty($mode))) -and -not ([System.Convert]::ToBoolean([string]::IsNullOrEmpty($clientCredentialType))))
+					{
+                        $exists3 = $node.security;
 						if ($exists3)
 						{
-							$node.security.SetAttribute("mode",$mode);
+						    $node.security.SetAttribute("mode",$mode);
 							$node.security.transport.SetAttribute("clientCredentialType",$clientCredentialType);
 							$modified = $TRUE;
 						}
-					}        
+					}										
 				}
 			}
 			# Updating customBinding
 			foreach($node in $customBindings)
-			{   
+			{   				
 				if(-not $excludedBindings.Contains($node.name))
 				{
 					if($SslEnabled -eq "false")

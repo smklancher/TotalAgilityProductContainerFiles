@@ -46,6 +46,8 @@ Param ([string]$searchKey)
         # construct config file's full path
 
         $currentFileName =$key.Substring(0,$pos);
+
+        $currentFileName = $currentFileName.Replace("--","\");
 		
 		# Fixing whitespace issue with Transformation Server install location
 		
@@ -86,7 +88,7 @@ Param ([string]$searchKey)
             if($currentFileName.Contains("Transformation Server"))
             {
             # New config required for TS OPMT deployment
-			if ($appSetting.key -eq "IsMultitenantDeployment" -and $appSetting.value -eq "true") {
+			if (($appSetting.key -eq "IsMultitenantDeployment" -and $appSetting.value -eq "true") -or ($appSetting.key -eq "IsRttsMultitenantDeployment" -and $appSetting.value -eq "true")) {
 				$newEl=$doc.CreateElement("add");
 				$nameAtt1=$doc.CreateAttribute("key");
 				$nameAtt1.psbase.value="TenantConfiguration";
