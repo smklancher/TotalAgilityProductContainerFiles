@@ -26,8 +26,9 @@ Param ([string]$searchKey)
    $continue =$TRUE;
 
    # Gets env variables where name starts with KTA_. 
-   # This will return all env variables that were created for a config file.               
-    Get-ChildItem env:*| sort-object name|Where-Object {$_.key.StartsWith($searchKey)} | ForEach-Object {
+   # This will return all env variables that were created for a config file.
+   # Excluding the CCMServerURL since it should not be updated without being part of the KCMProxy configuration
+    Get-ChildItem env:*| sort-object name|Where-Object {$_.key.StartsWith($searchKey) -and -not ($_.key.contains("CCMServerURL"))} | ForEach-Object {
         
      # break\continue\return works differently than C# . When we return from if,  ending 
      # if statement but not returning back from function so added additional if statement
@@ -45,6 +46,13 @@ Param ([string]$searchKey)
         # construct config file's full path
 
         $currentFileName =$key.Substring(0,$pos);
+		
+		# Fixing whitespace issue with Transformation Server install location
+		
+		if($currentFileName.Contains("TransformationServer"))
+        {
+          $currentFileName = $currentFileName -replace "TransformationServer", "Transformation Server"
+        }
 
         # for regasc path will be appended
         if(-not $currentFileName.Contains("C:\"))
@@ -60,25 +68,26 @@ Param ([string]$searchKey)
         {  
             # check if file exists before opening file.
             if(Test-Path $currentFileName) {            
-
-                Write-Host "Opening File: $currentFileName";
-                $doc = (Get-Content $currentFileName) -as [Xml];                
+				
+				$doc = (Get-Content $currentFileName) -as [Xml];                
             }
             else
-            {
-                # show error if config file doesn't exists.
-                Write-Host "File Not Found: $currentFileName";      
-                
-                 # break loop and get next index          
+            {                
+				# break loop and get next index          
                 $continue =$FALSE;                
             }
         }         
 
         if($doc -ne $null)
         {
-			# New config required for TS OPMT deployment
-			if ($appSetting -eq "IsMultitenantDeployment" -and $appSetting.value -eq "true") {
-				$newEl=$doc.configuration.appSetting.CreateElement("add");
+			# look for app setting name in a config file.
+            $appSetting = $doc.configuration.appSettings.add | Where-Object {$_.key -eq $key};
+
+            if($currentFileName.Contains("Transformation Server"))
+            {
+            # New config required for TS OPMT deployment
+			if ($appSetting.key -eq "IsMultitenantDeployment" -and $appSetting.value -eq "true") {
+				$newEl=$doc.CreateElement("add");
 				$nameAtt1=$doc.CreateAttribute("key");
 				$nameAtt1.psbase.value="TenantConfiguration";
 				$newEl.SetAttributeNode($nameAtt1);
@@ -87,10 +96,8 @@ Param ([string]$searchKey)
 				$newEl.SetAttributeNode($nameAtt2);
 				$doc.configuration["appSettings"].AppendChild($newEl);
 				$modified = $TRUE;
+            }            
             }
-            # look for app setting name in a config file.
-            $appSetting = $doc.configuration.appSettings.add | Where-Object {$_.key -eq $key};
-
             if ($appSetting) {
 
                 # update app setting with env var value.
@@ -102,9 +109,9 @@ Param ([string]$searchKey)
     }
 
     if ($modified) {
-
+			$fileName = [System.IO.Path]::GetFileName($currentFileName);
             # save config file after making changes.                           
-            Write-Host "Saving File: $currentFileName";
+            Write-Host "Updated config settings in file: $fileName";
             $doc.Save($currentFileName);               
      }         
 }
@@ -119,9 +126,66 @@ Get-ChildItem env:*| sort-object name|Where-Object {$_.key.StartsWith($appSettin
 
     if (-not $keys.Contains($key))
     {
-        $keys.Add($key);
+        $keys.Add($key) | Out-Null;
        
         # update config settings for the config file
         Update-ConfigFile -searchKey $key;
     }     
 }    
+
+# Updates server id and DB connection string in a licensing config file with env variable value.
+function Update-License-Config {
+
+	param ([string] $licenseServerId, [string] $licenseDBConnStr)
+
+	if($licenseServerId -ne 1 -and $licenseServerId -ne 2)
+	{
+		"Invalid license server ID."
+		return
+	}
+
+	$fileName = "C:\Program Files (x86)\Kofax\TotalAgility\LicenseServer\KSALicenseService.exe.config"
+	if(Test-Path -Path $fileName)
+	{
+		$xmlDoc = [System.Xml.XmlDocument](Get-Content $fileName);
+
+		if($xmlDoc -ne $null) 
+		{
+			# Updating licensing server id
+			if($xmlDoc.configuration.appSettings.add -ne $null)
+			{
+				$xmlDoc.configuration.appSettings.add.SetAttribute("value",$licenseServerId)
+			}
+
+			# Updating licensing database connection string
+			if($xmlDoc.configuration.connectionStrings.add -ne $null)
+			{
+				$xmlDoc.configuration.connectionStrings.add.SetAttribute("connectionString",$licenseDBConnStr)
+			}
+
+			$xmlDoc.Save($fileName);
+			Write-Host "Updated config settings in file: $fileName"			
+		}
+	}
+}
+
+# Verifying if the License server is installed making use of the registry key.
+# If present then only update the license server configuration file.
+if(Test-Path -Path "HKLM:\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall\{AF1D8F88-1CF4-4B6A-A5B5-E94CB2E9C7AB}")
+{
+	$licenseServerId = "1";
+	$licenseDBConnStr = "";
+
+	# Read the licensing server id from the env variable
+	Get-ChildItem env:*| sort-object name|Where-Object {$_.key -eq "ServerId"} | ForEach-Object {
+			$licenseServerId = $_.value;
+	}
+
+	# Read the licensing database connections string from the env variable
+	Get-ChildItem env:*| sort-object name|Where-Object {$_.key -eq "LicensingDatabase"} | ForEach-Object {
+			$licenseDBConnStr = $_.value;
+	}
+
+	# Update licensing information.
+	Update-License-Config $licenseServerId $licenseDBConnStr
+}
