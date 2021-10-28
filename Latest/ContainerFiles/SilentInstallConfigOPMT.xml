@@ -81,6 +81,8 @@
     <Password>password</Password>
     <FromAddress>from address</FromAddress>
     <BccAddress>bcc address</BccAddress>
+    <EnableSSL>false</EnableSSL>
+    <InternationalCharacterSupport>false</InternationalCharacterSupport>
   </EmailConfig>
   <TransformationServerInfo>
     <TSConfigFile>Provide inifile path along with name for TS to configure</TSConfigFile>

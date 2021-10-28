@@ -1,5 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ConfigurationEntity xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <ServicesInstallOptions>
+    <ImportServiceInstance2>false</ImportServiceInstance2>
+    <ImportServiceInstance3>false</ImportServiceInstance3>
+  </ServicesInstallOptions>
   <LicenseServer>
     <LicenseServerName>localhost</LicenseServerName>
     <PortNumber>3581</PortNumber>

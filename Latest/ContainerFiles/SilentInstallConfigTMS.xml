@@ -72,6 +72,8 @@
     <Password></Password>
     <FromAddress></FromAddress>
     <BccAddress></BccAddress>
+    <EnableSSL>false</EnableSSL>
+    <InternationalCharacterSupport>false</InternationalCharacterSupport>
   </EmailConfig>
   <SiteRoot>Default Web Site</SiteRoot>
 </ConfigurationEntity>
