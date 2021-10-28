@@ -15,6 +15,7 @@
     <SerialNumber></SerialNumber>
     <ProductCode></ProductCode>
     <SkipLicense>true</SkipLicense>
+    <ServerId>1</ServerId>
   </LicenseServer>
   <InstallDirectory>C:\Program Files\Kofax\TotalAgility\</InstallDirectory>
   <ApplicationServerName> app server name </ApplicationServerName>
@@ -25,13 +26,7 @@
     <TenantSettings />
     <Main>
       <DatabaseName>TotalAgility</DatabaseName>
-      <Server>server name</Server>
-      <SqlScript>
-        <CreateScript>Create_Main.SQL</CreateScript>
-        <DropScript>Drop_Main.sql</DropScript>
-        <InitializeScript>Initialise_Main.sql</InitializeScript>
-        <ConversionScript>Convert_Main.SQL</ConversionScript>
-      </SqlScript>
+      <Server></Server>
       <Security>
         <WindowsAuthentication>true</WindowsAuthentication>
         <UserName></UserName>
@@ -42,12 +37,6 @@
     <Audit>
       <DatabaseName>TotalAgility</DatabaseName>
       <Server>server name</Server>
-      <SqlScript>
-        <CreateScript>Create_Audit.sql</CreateScript>
-        <DropScript>Drop_Audit.sql</DropScript>
-        <InitializeScript>Initialise_Audit.sql</InitializeScript>
-        <ConversionScript>Convert_Audit.SQL</ConversionScript>
-      </SqlScript>
       <Security>
         <WindowsAuthentication>true</WindowsAuthentication>
         <UserName></UserName>
@@ -58,11 +47,6 @@
     <FinishedJobs>
       <DatabaseName>TotalAgility</DatabaseName>
       <Server>server name</Server>
-      <SqlScript>
-        <CreateScript>Create_Archive.sql</CreateScript>
-        <DropScript>Drop_Archive.sql</DropScript>
-        <ConversionScript>Convert_Archive.SQL</ConversionScript>
-      </SqlScript>
       <Security>
         <WindowsAuthentication>true</WindowsAuthentication>
         <UserName></UserName>
@@ -74,11 +58,6 @@
     <DataLayer>
       <DatabaseName>TotalAgility_Documents</DatabaseName>
       <Server>server name</Server>
-      <SqlScript>
-        <CreateScript>Repository2012_TablesCreate.sql</CreateScript>
-        <DropScript>Repository2012_Drop.sql</DropScript>
-        <ConversionScript>Repository2012_Convert.SQL</ConversionScript>
-      </SqlScript>
       <Security>
         <WindowsAuthentication>true</WindowsAuthentication>
         <UserName></UserName>
@@ -89,12 +68,6 @@
     <Simulator>
       <DatabaseName>TotalAgility_Simulator</DatabaseName>
       <Server>server name</Server>
-      <SqlScript>
-        <CreateScript>Create_Simulator.SQL</CreateScript>
-        <DropScript>Drop_Simulator.SQL</DropScript>
-        <InitializeScript />
-        <ConversionScript>Convert_Simulator.SQL</ConversionScript>
-      </SqlScript>
       <Security>
         <WindowsAuthentication>true</WindowsAuthentication>
         <UserName></UserName>
@@ -105,12 +78,6 @@
     <ReportingAnalytics>
       <DatabaseName>TotalAgility_Reporting</DatabaseName>
       <Server>server name</Server>
-      <SqlScript>
-        <CreateScript>Kofax.Reporting.Analytics.SQL_TablesCreate.sql</CreateScript>
-        <DropScript>Kofax.Reporting.Analytics.SQL_Drop.sql</DropScript>
-        <InitializeScript>Kofax.Reporting.Analytics.SQL_Initialize.sql</InitializeScript>
-        <ConversionScript></ConversionScript>
-      </SqlScript>
       <Security>
         <WindowsAuthentication>true</WindowsAuthentication>
         <UserName></UserName>
@@ -121,12 +88,6 @@
     <ReportingStaging>
       <DatabaseName>TotalAgility_Reporting_Staging</DatabaseName>
       <Server>server name</Server>
-      <SqlScript>
-        <CreateScript>Kofax.Reporting.Analytics.Staging.SQL_TablesCreate.sql</CreateScript>
-        <DropScript>Kofax.Reporting.Analytics.Staging.SQL_Drop.sql</DropScript>
-        <InitializeScript>Kofax.Reporting.Analytics.Staging.SQL_Initialize.sql</InitializeScript>
-        <ConversionScript></ConversionScript>
-      </SqlScript>
       <Security>
         <WindowsAuthentication>true</WindowsAuthentication>
         <UserName></UserName>
@@ -156,7 +117,7 @@
   </InstallInfo>
   <TransformationServerInfo>
     <TSConfigFile>Provide inifile path along with name for TS to configure</TSConfigFile>
-    <LogFile>log file with full path</LogFile>
+    <LogFile>C:\Program Files\Kofax\TotalAgility\Transformation Server\Tslog.txt</LogFile>
     <InstallLocation>C:\Program Files\Kofax\TotalAgility\Transformation Server</InstallLocation>
     <WindowsServiceAccount>username</WindowsServiceAccount>
     <WindowsServicePassword>password</WindowsServicePassword>
@@ -173,8 +134,7 @@
   <InstallLicenseProxy>false</InstallLicenseProxy>
   <TenantServiceURL>Provide Valid Tenant URL</TenantServiceURL>
   <SystemSessionId>Provide Valid SessionID</SystemSessionId>
-  <UserName></UserName>
-  <Password></Password>
+  <KTAResourceUserName></KTAResourceUserName>
   <KTAResourcePassword></KTAResourcePassword>
   <StartServices>true</StartServices>
   <ImportWorkspacePackage>false</ImportWorkspacePackage>

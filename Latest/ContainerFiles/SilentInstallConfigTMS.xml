@@ -71,6 +71,7 @@
     <UserName></UserName>
     <Password></Password>
     <FromAddress></FromAddress>
+    <BccAddress></BccAddress>
   </EmailConfig>
   <SiteRoot>Default Web Site</SiteRoot>
 </ConfigurationEntity>

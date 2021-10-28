@@ -13,6 +13,7 @@
     <SerialNumber></SerialNumber>
     <ProductCode></ProductCode>
     <SkipLicense>true</SkipLicense>
+    <ServerId>1</ServerId>
   </LicenseServer>
   <IsDatabaseWindowsAuthentication>false</IsDatabaseWindowsAuthentication>
   <InstallDirectory>C:\Program Files\Kofax\TotalAgility\</InstallDirectory>
@@ -20,6 +21,8 @@
   <InstallTenantManagementWebsite>true</InstallTenantManagementWebsite>
   <ApplicationServerName>app server name</ApplicationServerName>
   <WebServerName>web server name</WebServerName>
+  <LiveHostName></LiveHostName>
+  <DevHostName></DevHostName>
   <DatabaseInformation>
     <InstallDatabases>true</InstallDatabases>
     <OverwriteIfExisting>true</OverwriteIfExisting>
@@ -28,12 +31,6 @@
     <MasterTenantDatabase>
       <DatabaseName>MasterTenants</DatabaseName>
       <Server>Server Name</Server>
-      <SqlScript>
-        <CreateScript>Create_MasterTenants.sql</CreateScript>
-        <DropScript>Drop_MasterTenants.sql</DropScript>
-        <InitializeScript>Initialise_MasterTenants.sql</InitializeScript>
-        <ConversionScript></ConversionScript>
-      </SqlScript>
       <Security>
         <WindowsAuthentication>true</WindowsAuthentication>
         <UserName></UserName>
@@ -43,13 +40,7 @@
     </MasterTenantDatabase>
     <DataCentreDatabase>
       <DatabaseName>DataCenterTenants</DatabaseName>
-      <Server>Server Name</Server>
-      <SqlScript>
-        <CreateScript>Create_DataCenterTenants.sql</CreateScript>
-        <DropScript>Drop_DataCenterTenants.sql</DropScript>
-        <InitializeScript>Initialise_DataCenterTenants.sql</InitializeScript>
-        <ConversionScript></ConversionScript>
-      </SqlScript>
+      <Server></Server>
       <Security>
         <WindowsAuthentication>true</WindowsAuthentication>
         <UserName></UserName>
@@ -89,10 +80,11 @@
     <UserName>username</UserName>
     <Password>password</Password>
     <FromAddress>from address</FromAddress>
+    <BccAddress>bcc address</BccAddress>
   </EmailConfig>
   <TransformationServerInfo>
     <TSConfigFile>Provide inifile path along with name for TS to configure</TSConfigFile>
-    <LogFile>log file with full path</LogFile>
+    <LogFile>C:\Program Files\Kofax\TotalAgility\Transformation Server\Tslog.txt</LogFile>
     <InstallLocation>C:\Program Files\Kofax\TotalAgility\Transformation Server</InstallLocation>
     <WindowsServiceAccount>username</WindowsServiceAccount>
     <WindowsServicePassword>password</WindowsServicePassword>
