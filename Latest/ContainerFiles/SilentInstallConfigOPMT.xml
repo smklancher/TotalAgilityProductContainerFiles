@@ -25,7 +25,7 @@
   <DevHostName></DevHostName>
   <DatabaseInformation>
     <InstallDatabases>true</InstallDatabases>
-    <OverwriteIfExisting>true</OverwriteIfExisting>
+    <OverwriteIfExisting>false</OverwriteIfExisting>
     <ScriptsLocation>C:\Program Files\Kofax\TotalAgility\DatabaseScripts\SQL Server\</ScriptsLocation>
     <TenantSettings />
     <MasterTenantDatabase>
@@ -96,8 +96,19 @@
     <OverrideDefSlots></OverrideDefSlots>
     <MaxSlots>0</MaxSlots>
     <EnableSyncCalls>true</EnableSyncCalls>
+    <NlpWestern>false</NlpWestern>
+    <NlpWestrenExtended>false</NlpWestrenExtended>
+    <NlpExtended>false</NlpExtended>
   </TransformationServerInfo>
   <StartServices>true</StartServices>
   <KofaxHostedTenant>false</KofaxHostedTenant>
   <SiteRoot>Default Web Site</SiteRoot>
+  <IsDocker>false</IsDocker>
+  <CaptureConfiguration>
+    <CloudStorageType>SQLServer</CloudStorageType>
+    <AzureBlobStorageConnectionString></AzureBlobStorageConnectionString>    
+    <AmazonS3AccessKey></AmazonS3AccessKey>
+    <AmazonS3SecretKey></AmazonS3SecretKey>
+    <AmazonS3RegionName></AmazonS3RegionName>
+  </CaptureConfiguration>
 </ConfigurationEntity>
