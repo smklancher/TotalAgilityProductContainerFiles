@@ -21,6 +21,7 @@
   </LicenseServer>
   <InstallDirectory>C:\Program Files\Kofax\TotalAgility\</InstallDirectory>
   <ApplicationServerName> app server name </ApplicationServerName>
+  <CheckDatabaseCompatibility>true</CheckDatabaseCompatibility>
   <DatabaseInformation>
     <InstallDatabases>true</InstallDatabases>
     <OverwriteIfExisting>false</OverwriteIfExisting>
@@ -124,6 +125,7 @@
     <NlpWestern>false</NlpWestern>
     <NlpWestrenExtended>false</NlpWestrenExtended>
     <NlpExtended>false</NlpExtended>
+    <InstallOCRAddons>true</InstallOCRAddons>
   </TransformationServerInfo>
   <IsIntegrationServer>false</IsIntegrationServer>
   <InstallLicenseProxy>false</InstallLicenseProxy>

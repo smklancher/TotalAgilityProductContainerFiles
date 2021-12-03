@@ -1,4 +1,7 @@
-FROM microsoft/aspnet
+FROM mcr.microsoft.com/dotnet/framework/aspnet
+
+# uncomment below if docker deployment is for KTA service only  without IIS and comment above line
+#FROM mcr.microsoft.com/dotnet/framework/runtime
 
 COPY ContainerFiles C:\\KTA
 

@@ -69,43 +69,49 @@ function EncryptWebConfigFile([string] $frameworkLocation, [string] $appName, [s
 ##############################
 
 function AddSecurityProvider ([string] $exeConfigFileName, [string] $exeConfigFileLocation) {
-    $fileName = $exeConfigFileLocation + "\" + $exeConfigFileName
-    $xmlDoc = [System.Xml.XmlDocument](Get-Content $fileName);
+	if (Test-Path $exeConfigFileLocation)
+	{
+		$fileName = $exeConfigFileLocation + "\" + $exeConfigFileName
+		$xmlDoc = [System.Xml.XmlDocument](Get-Content $fileName);
 
-    if($xmlDoc -ne $null -and $xmlDoc.configuration.configProtectedData -eq $null) 
-    {
-        $configProtectedDataElement = $xmlDoc.configuration.AppendChild($xmlDoc.CreateElement("configProtectedData"));
-        $providersElement = $configProtectedDataElement.AppendChild($xmlDoc.CreateElement("providers"));
-
-		if ($encryptionType -eq $dapapiProvider)
+		if($xmlDoc -ne $null -and $xmlDoc.configuration.configProtectedData -eq $null) 
 		{
-			$addElement = $providersElement.AppendChild($xmlDoc.CreateElement("add"));
-			$addElement.SetAttribute("useMachineProtection","true");
-			$addElement.SetAttribute("name","DPAPIProtection");
-			$addElement.SetAttribute("type","System.Configuration.DpapiProtectedConfigurationProvider, System.Configuration, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a");
-		}
-		if ($encryptionType -eq $rsaProvider)
-		{
-			$addElement = $providersElement.AppendChild($xmlDoc.CreateElement("add"));        
-			$addElement.SetAttribute("name","RSAProvider");
-			$addElement.SetAttribute("type","System.Configuration.RsaProtectedConfigurationProvider, System.Configuration, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL");
-			$addElement.SetAttribute("keyContainerName","CPUServerKeys");
-		}
+			$configProtectedDataElement = $xmlDoc.configuration.AppendChild($xmlDoc.CreateElement("configProtectedData"));
+			$providersElement = $configProtectedDataElement.AppendChild($xmlDoc.CreateElement("providers"));
 
-        $xmlDoc.Save($fileName);
-    }
+			if ($encryptionType -eq $dapapiProvider)
+			{
+				$addElement = $providersElement.AppendChild($xmlDoc.CreateElement("add"));
+				$addElement.SetAttribute("useMachineProtection","true");
+				$addElement.SetAttribute("name","DPAPIProtection");
+				$addElement.SetAttribute("type","System.Configuration.DpapiProtectedConfigurationProvider, System.Configuration, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a");
+			}
+			if ($encryptionType -eq $rsaProvider)
+			{
+				$addElement = $providersElement.AppendChild($xmlDoc.CreateElement("add"));        
+				$addElement.SetAttribute("name","RSAProvider");
+				$addElement.SetAttribute("type","System.Configuration.RsaProtectedConfigurationProvider, System.Configuration, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL");
+				$addElement.SetAttribute("keyContainerName","CPUServerKeys");
+			}
+
+			$xmlDoc.Save($fileName);
+		}
+	}
 }
 
-function DPAPIEncryption ([string] $exeConfigFileName, [string] $exeConfigFileLocation, [string] $section) {        
-    Set-Location $exeConfigFileLocation
-    $filePath = $exeConfigFileLocation + "\" + $exeConfigFileName
-    $fileExists = Test-Path -Path $filePath 
-    if($fileExists)
-    {
-        "DPAPI Encrypting " + $filePath + " config file"
-        AddSecurityProvider $exeConfigFileName $exeConfigFileLocation
-        .\Kofax.CEBPM.EncryptConfig.exe -f $exeConfigFileName -s $section -p DPAPIProtection -enc
-    }
+function DPAPIEncryption ([string] $exeConfigFileName, [string] $exeConfigFileLocation, [string] $section) {     
+	if (Test-Path $exeConfigFileLocation)
+	{
+		Set-Location $exeConfigFileLocation
+		$filePath = $exeConfigFileLocation + "\" + $exeConfigFileName
+		$fileExists = Test-Path -Path $filePath 
+		if($fileExists)
+		{
+			"DPAPI Encrypting " + $filePath + " config file"
+			AddSecurityProvider $exeConfigFileName $exeConfigFileLocation
+			.\Kofax.CEBPM.EncryptConfig.exe -f $exeConfigFileName -s $section -p DPAPIProtection -enc
+		}
+	}
 }
 
 ############################
@@ -115,23 +121,26 @@ function DPAPIEncryption ([string] $exeConfigFileName, [string] $exeConfigFileLo
 function PrepareRSAContainerFile ([string] $RSAContainerFile, [string] $frameworkLocation, 
                                   [string] $totalAgilityserviceUser, [string] $exeConfigFileLocation, 
                                   [string] $exeConfigFileName, [string] $section, [string] $keyFileName) { 
-    Set-Location $frameworkLocation
+	if (Test-Path $exeConfigFileLocation)
+	{
+		Set-Location $frameworkLocation
 
-    # Generate custom RSA container file
-    .\aspnet_regiis.exe -pz $RSAContainerFile
-    .\aspnet_regiis.exe -pc $RSAContainerFile -exp
+		# Generate custom RSA container file
+		.\aspnet_regiis.exe -pz $RSAContainerFile
+		.\aspnet_regiis.exe -pc $RSAContainerFile -exp
 
-    # Grant the TotalAgility Core Worker Server Service user permission to read the RSA container file
-    .\aspnet_regiis -pa $RSAContainerFile $totalAgilityserviceUser
+		# Grant the TotalAgility Core Worker Server Service user permission to read the RSA container file
+		.\aspnet_regiis -pa $RSAContainerFile $totalAgilityserviceUser
 
-    # Encrypt the file
-    Set-Location $exeConfigFileLocation
-    .\Kofax.CEBPM.EncryptConfig.exe -f $exeConfigFileName -s $section -p RSAProvider -enc
+		# Encrypt the file
+		Set-Location $exeConfigFileLocation
+		.\Kofax.CEBPM.EncryptConfig.exe -f $exeConfigFileName -s $section -p RSAProvider -enc
 
-    # Export the key
-    $ExportedKeyFile = $keyFileExportLocation + "\" + $keyFileName 
-    Set-Location $frameworkLocation
-    .\aspnet_regiis -px $RSAContainerFile $ExportedKeyFile -pri
+		# Export the key
+		$ExportedKeyFile = $keyFileExportLocation + "\" + $keyFileName 
+		Set-Location $frameworkLocation
+		.\aspnet_regiis -px $RSAContainerFile $ExportedKeyFile -pri
+	}
 }
 
 function ImportRSAContainerFile ([string] $RSAContainerFile, [string] $keyFileName, [string] $keyFileSourceLocation, [string] $totalAgilityServiceUser){
@@ -147,14 +156,17 @@ function ImportRSAContainerFile ([string] $RSAContainerFile, [string] $keyFileNa
 function RSAEncryption ([string] $RSAContainerFile, [string] $frameworkLocation, [string] $totalAgilityserviceUser,
                         [string] $exeConfigFileLocation, [string] $exeConfigFileName, [string] $section,
                         [string] $keyFileExportLocation, [string] $keyFileName) {
-    $filePath = $exeConfigFileLocation + "\" + $exeConfigFileName
-    $fileExists = Test-Path -Path $filePath 
-    if($fileExists) {
-        "RSA Encrypting " + $filePath + " config file"
-        AddSecurityProvider $exeConfigFileName $exeConfigFileLocation
-        PrepareRSAContainerFile $RSAContainerFile $frameworkLocation $totalAgilityserviceUser $exeConfigFileLocation $exeConfigFileName $section $keyFileName
-        ImportRSAContainerFile $RSAContainerFile $keyFileName $keyFileExportLocation $totalAgilityServiceUser
-    }
+	if (Test-Path $exeConfigFileLocation)
+	{
+		$filePath = $exeConfigFileLocation + "\" + $exeConfigFileName
+		$fileExists = Test-Path -Path $filePath 
+		if($fileExists) {
+			"RSA Encrypting " + $filePath + " config file"
+			AddSecurityProvider $exeConfigFileName $exeConfigFileLocation
+			PrepareRSAContainerFile $RSAContainerFile $frameworkLocation $totalAgilityserviceUser $exeConfigFileLocation $exeConfigFileName $section $keyFileName
+			ImportRSAContainerFile $RSAContainerFile $keyFileName $keyFileExportLocation $totalAgilityServiceUser
+		}
+	}
 }
 
 ####################
@@ -174,74 +186,104 @@ function EncryptWebConfig ([string] $provider){
 
 # DPAPI Encryption - for all exe config files in Agility.Server.Web
 function AgilityServerWebConfig_DPAPICrypto () {
-    init $agilityServerWebBinDir
-    DPAPIEncryption $exportConnectConfigfile $agilityServerWebBinDir $section_Const
-    DPAPIEncryption $streamingServiceConfigFile $agilityServerWebBinDir $section_Const
+	if(Test-Path $agilityServerWebBinDir)
+	{
+		init $agilityServerWebBinDir
+		DPAPIEncryption $exportConnectConfigfile $agilityServerWebBinDir $section_Const
+		DPAPIEncryption $streamingServiceConfigFile $agilityServerWebBinDir $section_Const
+	}
 }
 
 # DPAPI Encryption - for all exe config files in CoreWorkerService
 function CoreWorkerServiceConfig_DPAPICrypto () {
-    init $CoreWorkerServiceDir
-    DPAPIEncryption  $coreWorkerServiceConfigFile $CoreWorkerServiceDir $section_Const
-    DPAPIEncryption  $executorConfigFile $CoreWorkerServiceDir $section_Const
-    DPAPIEncryption  $exportServiceConfigFile $CoreWorkerServiceDir $section_Const
-    DPAPIEncryption  $exportWorkerConfigFile $CoreWorkerServiceDir $section_Const    
-    DPAPIEncryption  $streamingServiceConfigFile $CoreWorkerServiceDir $section_Const
+	if(Test-Path $CoreWorkerServiceDir)
+	{
+		init $CoreWorkerServiceDir
+		DPAPIEncryption  $coreWorkerServiceConfigFile $CoreWorkerServiceDir $section_Const
+		DPAPIEncryption  $executorConfigFile $CoreWorkerServiceDir $section_Const
+		DPAPIEncryption  $exportServiceConfigFile $CoreWorkerServiceDir $section_Const
+		DPAPIEncryption  $exportWorkerConfigFile $CoreWorkerServiceDir $section_Const    
+		DPAPIEncryption  $streamingServiceConfigFile $CoreWorkerServiceDir $section_Const
+	}
 }
 
 # DPAPI Encryption - for all exe config files in Reporting
 function ReportingConfig_DPAPICrypto(){   
-    init $ReportingDir 
-    DPAPIEncryption $reportingServiceTAServiceConfigFile $ReportingDir $section_Const
+	if(Test-Path $ReportingDir)
+	{
+		init $ReportingDir 
+		DPAPIEncryption $reportingServiceTAServiceConfigFile $ReportingDir $section_Const
+	}
 }
 
 # DPAPI Encryption - for all exe config files in TransformationServer
 function TransformationServerConfig_DPAPICrypto(){ 
-    init $transformationInstallationDir   
-    DPAPIEncryption $transformationServiceHostConfigFile $transformationInstallationDir $section_Const
+	if(Test-Path $transformationInstallationDir)
+	{	
+		init $transformationInstallationDir   
+		DPAPIEncryption $transformationServiceHostConfigFile $transformationInstallationDir $section_Const
+	}
 }
 
 # DPAPI Encryption - for all exe config files in LicenseServer
 function LicenseServerConfig_DPAPICrypto(){ 
-    init $LicenseServerDir   
-    DPAPIEncryption $licensingServiceDocConvSrvConfigFile $LicenseServerDir $section_Const
-    DPAPIEncryption $licensingServiceDocConvSrvConfigFile $LicenseServerDir $connectionStringSection_Const
+	if(Test-Path $LicenseServerDir)
+	{
+		init $LicenseServerDir   
+		DPAPIEncryption $licensingServiceDocConvSrvConfigFile $LicenseServerDir $section_Const
+		DPAPIEncryption $licensingServiceDocConvSrvConfigFile $LicenseServerDir $connectionStringSection_Const
+	}
 }
 
 # RSA Encryption - for all exe config files in Agility.Server.Web
 function AgilityServerWebConfig_RSACrypto () {
-    init $agilityServerWebBinDir
-    RSAEncryption $containerFileNameCoreworkerService_Const $frameworkLocation_Const $totalAgilityserviceUser_Const $agilityServerWebBinDir $exportConnectConfigfile $section_Const $keyFileExportLocation_Const $keyFileName_Const
-    RSAEncryption $containerFileNameCoreworkerService_Const $frameworkLocation_Const $totalAgilityserviceUser_Const $agilityServerWebBinDir $streamingServiceConfigFile $section_Const $keyFileExportLocation_Const $keyFileName_Const
+	if(Test-Path $agilityServerWebBinDir)
+	{
+		init $agilityServerWebBinDir
+		RSAEncryption $containerFileNameCoreworkerService_Const $frameworkLocation_Const $totalAgilityserviceUser_Const $agilityServerWebBinDir $exportConnectConfigfile $section_Const $keyFileExportLocation_Const $keyFileName_Const
+		RSAEncryption $containerFileNameCoreworkerService_Const $frameworkLocation_Const $totalAgilityserviceUser_Const $agilityServerWebBinDir $streamingServiceConfigFile $section_Const $keyFileExportLocation_Const $keyFileName_Const
+	}
 }
 
 # RSA Encryption - for all exe config files in CoreWorkerService
 function CoreWorkerServiceConfig_RSACrypto () {
-    init $CoreWorkerServiceDir
-    RSAEncryption $containerFileNameAgilitySeverWeb_Const $frameworkLocation_Const $totalAgilityserviceUser_Const $CoreWorkerServiceDir $coreWorkerServiceConfigFile $section_Const $keyFileExportLocation_Const $keyFileName_Const
-    RSAEncryption $containerFileNameAgilitySeverWeb_Const $frameworkLocation_Const $totalAgilityserviceUser_Const $CoreWorkerServiceDir $executorConfigFile $section_Const $keyFileExportLocation_Const $keyFileName_Const
-    RSAEncryption $containerFileNameAgilitySeverWeb_Const $frameworkLocation_Const $totalAgilityserviceUser_Const $CoreWorkerServiceDir $exportServiceConfigFile $section_Const $keyFileExportLocation_Const $keyFileName_Const
-    RSAEncryption $containerFileNameAgilitySeverWeb_Const $frameworkLocation_Const $totalAgilityserviceUser_Const $CoreWorkerServiceDir $exportWorkerConfigFile $section_Const $keyFileExportLocation_Const $keyFileName_Const
-    RSAEncryption $containerFileNameAgilitySeverWeb_Const $frameworkLocation_Const $totalAgilityserviceUser_Const $CoreWorkerServiceDir $streamingServiceConfigFile $section_Const $keyFileExportLocation_Const $keyFileName_Const
+	if(Test-Path $CoreWorkerServiceDir)
+	{
+		init $CoreWorkerServiceDir
+		RSAEncryption $containerFileNameAgilitySeverWeb_Const $frameworkLocation_Const $totalAgilityserviceUser_Const $CoreWorkerServiceDir $coreWorkerServiceConfigFile $section_Const $keyFileExportLocation_Const $keyFileName_Const
+		RSAEncryption $containerFileNameAgilitySeverWeb_Const $frameworkLocation_Const $totalAgilityserviceUser_Const $CoreWorkerServiceDir $executorConfigFile $section_Const $keyFileExportLocation_Const $keyFileName_Const
+		RSAEncryption $containerFileNameAgilitySeverWeb_Const $frameworkLocation_Const $totalAgilityserviceUser_Const $CoreWorkerServiceDir $exportServiceConfigFile $section_Const $keyFileExportLocation_Const $keyFileName_Const
+		RSAEncryption $containerFileNameAgilitySeverWeb_Const $frameworkLocation_Const $totalAgilityserviceUser_Const $CoreWorkerServiceDir $exportWorkerConfigFile $section_Const $keyFileExportLocation_Const $keyFileName_Const
+		RSAEncryption $containerFileNameAgilitySeverWeb_Const $frameworkLocation_Const $totalAgilityserviceUser_Const $CoreWorkerServiceDir $streamingServiceConfigFile $section_Const $keyFileExportLocation_Const $keyFileName_Const
+	}
 }
 
 # RSA Encryption - for all exe config files in Reporting
 function ReportingConfig_RSACrypto(){    
-    init $ReportingDir
-    RSAEncryption $containerFileNameAgilitySeverWeb_Const $frameworkLocation_Const $totalAgilityserviceUser_Const $ReportingDir $reportingServiceTAServiceConfigFile $section_Const $keyFileExportLocation_Const $keyFileName_Const
+	if(Test-Path $ReportingDir)
+	{
+		init $ReportingDir
+		RSAEncryption $containerFileNameAgilitySeverWeb_Const $frameworkLocation_Const $totalAgilityserviceUser_Const $ReportingDir $reportingServiceTAServiceConfigFile $section_Const $keyFileExportLocation_Const $keyFileName_Const
+	}
 }
 
 # RSA Encryption - for all exe config files in TransformationServer
 function TransformationServerConfig_RSACrypto(){    
-    init $transformationInstallationDir
-    RSAEncryption $containerFileNameAgilitySeverWeb_Const $frameworkLocation_Const $totalAgilityserviceUser_Const $transformationInstallationDir $transformationServiceHostConfigFile $section_Const $keyFileExportLocation_Const $keyFileName_Const
+	if(Test-Path $transformationInstallationDir)
+	{
+		init $transformationInstallationDir
+		RSAEncryption $containerFileNameAgilitySeverWeb_Const $frameworkLocation_Const $totalAgilityserviceUser_Const $transformationInstallationDir $transformationServiceHostConfigFile $section_Const $keyFileExportLocation_Const $keyFileName_Const
+	}
 }
 
 # RSA Encryption - for all exe config files in LicenseServer
-function LicenseServerConfig_RSACrypto(){    
-    init $LicenseServerDir    
-    RSAEncryption $containerFileNameAgilitySeverWeb_Const $frameworkLocation_Const $totalAgilityserviceUser_Const $LicenseServerDir $licensingServiceDocConvSrvConfigFile $section_Const $keyFileExportLocation_Const $keyFileName_Const
-    RSAEncryption $containerFileNameAgilitySeverWeb_Const $frameworkLocation_Const $totalAgilityserviceUser_Const $LicenseServerDir $licensingServiceDocConvSrvConfigFile $connectionStringSection_Const $keyFileExportLocation_Const $keyFileName_Const
+function LicenseServerConfig_RSACrypto(){
+	if(Test-Path $LicenseServerDir)
+	{
+		init $LicenseServerDir
+		RSAEncryption $containerFileNameAgilitySeverWeb_Const $frameworkLocation_Const $totalAgilityserviceUser_Const $LicenseServerDir $licensingServiceDocConvSrvConfigFile $section_Const $keyFileExportLocation_Const $keyFileName_Const
+		RSAEncryption $containerFileNameAgilitySeverWeb_Const $frameworkLocation_Const $totalAgilityserviceUser_Const $LicenseServerDir $licensingServiceDocConvSrvConfigFile $connectionStringSection_Const $keyFileExportLocation_Const $keyFileName_Const
+	}
 }
 
 function AllDPAPIEncryption () {

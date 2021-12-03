@@ -2,6 +2,9 @@
 <ConfigurationEntity xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <ServicesInstallOptions>
     <CoreWorkerService>true</CoreWorkerService>
+    <ImportService>true</ImportService>
+    <ImportServiceInstance2>false</ImportServiceInstance2>
+    <ImportServiceInstance3>false</ImportServiceInstance3>
     <ReportingService>true</ReportingService>
     <LicenseService>true</LicenseService>
     <TransformationService>true</TransformationService>
@@ -23,6 +26,7 @@
   <WebServerName>web server name</WebServerName>
   <LiveHostName></LiveHostName>
   <DevHostName></DevHostName>
+  <CheckDatabaseCompatibility>true</CheckDatabaseCompatibility>
   <DatabaseInformation>
     <InstallDatabases>true</InstallDatabases>
     <OverwriteIfExisting>false</OverwriteIfExisting>
@@ -101,6 +105,7 @@
     <NlpWestern>false</NlpWestern>
     <NlpWestrenExtended>false</NlpWestrenExtended>
     <NlpExtended>false</NlpExtended>
+    <InstallOCRAddons>true</InstallOCRAddons>
   </TransformationServerInfo>
   <StartServices>true</StartServices>
   <KofaxHostedTenant>false</KofaxHostedTenant>
@@ -108,9 +113,10 @@
   <IsDocker>false</IsDocker>
   <CaptureConfiguration>
     <CloudStorageType>SQLServer</CloudStorageType>
-    <AzureBlobStorageConnectionString></AzureBlobStorageConnectionString>    
+    <AzureBlobStorageConnectionString></AzureBlobStorageConnectionString>
     <AmazonS3AccessKey></AmazonS3AccessKey>
     <AmazonS3SecretKey></AmazonS3SecretKey>
     <AmazonS3RegionName></AmazonS3RegionName>
+    <TenantFileStorageRootPath></TenantFileStorageRootPath>
   </CaptureConfiguration>
 </ConfigurationEntity>
