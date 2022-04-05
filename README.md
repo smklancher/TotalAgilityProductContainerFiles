@@ -2,7 +2,7 @@
 
 These are the sample scripts for installing TotalAgility in docker which are provided with the product in (Install Source)\Utilities\Docker.  
 
-The intent of adding them here is to use the commit diffs to see changes in the samples between versions.  Since is is common to customize scripts to the needs of an environment, it can be helpful to see these changes.  If the changes are minor it might make sense to manually apply them to customized scripts when building containers for a new version.  If the changes are larger, it might make sense to start with the updated samples and apply the customizations on top.
+The intent of adding them here is to use the commit diffs to see changes in the samples between versions.  Since it is common to customize scripts to the needs of an environment, it can be helpful to see these changes.  If the changes are minor it might make sense to manually apply them to customized scripts when building containers for a new version.  If the changes are larger, it might make sense to start with the updated samples and apply the customizations on top.
 
 In addition to the powershell scripts, the sample XML file used for the KTA silent install is also included, as this is used when the scripts trigger the KTA install during container build.  Similar to the scripts, there might be changes between versions that are worth adding to an existing configuration when building containers on a new version.  But it should be noted that these are general samples for silent install configuration, and not all settings are applicable to containers, as shown in the install guide.  The separate example XML files are included from the OP, OPMT, and IS builds, as well as the Tenant Management System install.
 
