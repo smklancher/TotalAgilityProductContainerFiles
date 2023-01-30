@@ -56,6 +56,12 @@ Param ([string]$searchKey)
           $currentFileName = $currentFileName -replace "TransformationServer", "Transformation Server"
         }
 
+		# for Tenant management web.config path needs to be appended bug 1884081.
+		if($currentFileName.Contains("Agility.Server.Web.TenantManagement"))
+        {
+			$currentFileName = "C:\Program Files\Kofax\TotalAgility Tenant Management\"  + $currentFileName;
+        }
+
         # for regasc path will be appended
         if(-not $currentFileName.Contains("C:\"))
         {

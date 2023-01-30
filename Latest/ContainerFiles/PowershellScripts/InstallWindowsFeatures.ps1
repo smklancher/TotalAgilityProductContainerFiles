@@ -1,5 +1,5 @@
-﻿
-if((Get-WindowsFeature Web-Server).InstallState -eq "Installed")
+﻿$IIS = Get-WindowsOptionalFeature -Online -FeatureName “IIS-WebServer”
+    if($IIS.State -eq "Enabled")
 	{
 		write-output "Installing Windows Feature IIS-NetFxExtensibility45" 
 		Enable-WindowsOptionalFeature -Online -FeatureName IIS-NetFxExtensibility45 -All

@@ -1,4 +1,5 @@
 ﻿# install prerequisites for TA
+$IIS = Get-WindowsOptionalFeature -Online -FeatureName “IIS-WebServer”
 filter timestamp {"$(Get-Date -Format G): $_"}
 write-output "Install prerequisites for KTA" | timestamp
 Invoke-Expression C:\KTA\PowershellScripts\InstallWindowsFeatures.ps1
@@ -10,7 +11,7 @@ write-output "Add Admin user for KTA" | timestamp
 Invoke-Expression C:\KTA\PowershellScripts\AddAdminUser.ps1
 Invoke-Expression C:\KTA\PowershellScripts\UpdateAdminUser.ps1
 
-if((Get-WindowsFeature Web-Server).InstallState -eq "Installed")
+if($IIS.State -eq "Enabled")
 {
 	# Install self signed cert
 	filter timestamp {"$(Get-Date -Format G): $_"}
@@ -28,7 +29,7 @@ get-childitem -path "C:\KTA\" -Include ($strings) -Recurse -force | ForEach-Obje
     catch { }
 	}
 
-if((Get-WindowsFeature Web-Server).InstallState -eq "Installed")
+if($IIS.State -eq "Enabled")
 {
 	# Download and install prerequisites for KCMProxy in silent mode
 
