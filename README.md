@@ -6,6 +6,11 @@ The intent of adding them here is to use the commit diffs to see changes in the 
 
 In addition to the powershell scripts, the sample XML file used for the KTA silent install is also included, as this is used when the scripts trigger the KTA install during container build.  Similar to the scripts, there might be changes between versions that are worth adding to an existing configuration when building containers on a new version.  But it should be noted that these are general samples for silent install configuration, and not all settings are applicable to containers, as shown in the install guide.  The separate example XML files are included from the OP, OPMT, and IS builds, as well as the Tenant Management System install.
 
+## KTA 7.10 to 7.11
+
+* [Powershell](https://github.com/smklancher/TotalAgilityProductContainerFiles/commit/e069a3ddd62ca864a4f75b68e242448f29222ec2)
+* [Silent install XML](https://github.com/smklancher/TotalAgilityProductContainerFiles/commit/4f7842a47fe5c1774183cebdf52a874da32fe17d)
+
 ## KTA 7.9 to 7.10
 
 * [Powershell](https://github.com/smklancher/TotalAgilityProductContainerFiles/commit/dc6a4cf5bafc8cd83555e9962d581d3140662b66)
