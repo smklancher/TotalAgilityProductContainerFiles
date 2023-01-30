@@ -1,0 +1,161 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ConfigurationEntity xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <ServicesInstallOptions>
+    <CoreWorkerService>true</CoreWorkerService>
+    <ImportService>true</ImportService>
+    <ImportServiceInstance2>false</ImportServiceInstance2>
+    <ImportServiceInstance3>false</ImportServiceInstance3>
+    <ExportService>true</ExportService>
+    <ReportingService>true</ReportingService>
+    <LicenseService>true</LicenseService>
+    <TransformationService>true</TransformationService>
+    <CoreServices>true</CoreServices>
+  </ServicesInstallOptions>
+  <LicenseServer>
+    <LicenseServerName>localhost</LicenseServerName>
+    <PortNumber>3581</PortNumber>
+    <SerialNumber></SerialNumber>
+    <ProductCode></ProductCode>
+    <SkipLicense>true</SkipLicense>
+    <ServerId>1</ServerId>
+	<EnableSSL>false</EnableSSL>
+	<Certificate></Certificate>
+  </LicenseServer>
+  <InstallDirectory>C:\Program Files\Kofax\TotalAgility\</InstallDirectory>
+  <ApplicationServerName> app server name </ApplicationServerName>
+  <CheckDatabaseCompatibility>true</CheckDatabaseCompatibility>
+  <DatabaseInformation>
+    <InstallDatabases>true</InstallDatabases>
+    <OverwriteIfExisting>false</OverwriteIfExisting>
+    <ScriptsLocation>C:\Program Files\Kofax\TotalAgility\DatabaseScripts\SQL Server\</ScriptsLocation>
+    <TenantSettings />
+    <Main>
+      <DatabaseName>TotalAgility</DatabaseName>
+      <Server></Server>
+      <Security>
+        <WindowsAuthentication>true</WindowsAuthentication>
+		  <AzureActiveDirectoryAuthentication>Off</AzureActiveDirectoryAuthentication>
+        <UserName></UserName>
+        <Password></Password>
+      </Security>
+      <NewDatabase>false</NewDatabase>
+    </Main>
+    <Audit>
+      <DatabaseName>TotalAgility</DatabaseName>
+      <Server>server name</Server>
+      <Security>
+        <WindowsAuthentication>true</WindowsAuthentication>
+		  <AzureActiveDirectoryAuthentication>Off</AzureActiveDirectoryAuthentication>
+        <UserName></UserName>
+        <Password></Password>
+      </Security>
+      <NewDatabase>false</NewDatabase>
+    </Audit>
+    <FinishedJobs>
+      <DatabaseName>TotalAgility</DatabaseName>
+      <Server>server name</Server>
+      <Security>
+        <WindowsAuthentication>true</WindowsAuthentication>
+		  <AzureActiveDirectoryAuthentication>Off</AzureActiveDirectoryAuthentication>
+        <UserName></UserName>
+        <Password></Password>
+      </Security>
+      <NewDatabase>false</NewDatabase>
+    </FinishedJobs>
+    <Forms></Forms>
+    <DataLayer>
+      <DatabaseName>TotalAgility_Documents</DatabaseName>
+      <Server>server name</Server>
+      <Security>
+        <WindowsAuthentication>true</WindowsAuthentication>
+		  <AzureActiveDirectoryAuthentication>Off</AzureActiveDirectoryAuthentication>
+        <UserName></UserName>
+        <Password></Password>
+      </Security>
+      <NewDatabase>false</NewDatabase>
+    </DataLayer>
+    <ReportingAnalytics>
+      <DatabaseName>TotalAgility_Reporting</DatabaseName>
+      <Server>server name</Server>
+      <Security>
+        <WindowsAuthentication>true</WindowsAuthentication>
+		  <AzureActiveDirectoryAuthentication>Off</AzureActiveDirectoryAuthentication>
+        <UserName></UserName>
+        <Password></Password>
+      </Security>
+      <NewDatabase>false</NewDatabase>
+    </ReportingAnalytics>
+    <ReportingStaging>
+      <DatabaseName>TotalAgility_Reporting_Staging</DatabaseName>
+      <Server>server name</Server>
+      <Security>
+        <WindowsAuthentication>true</WindowsAuthentication>
+		  <AzureActiveDirectoryAuthentication>Off</AzureActiveDirectoryAuthentication>
+        <UserName></UserName>
+        <Password></Password>
+      </Security>
+      <NewDatabase>false</NewDatabase>
+    </ReportingStaging>
+  </DatabaseInformation>
+  <IdentityInformation>
+    <UserName>username</UserName>
+    <Password>password</Password>
+    <RunAsSystemAccount>false</RunAsSystemAccount>
+    <RunAsNetworkServiceAccount>false</RunAsNetworkServiceAccount>
+  </IdentityInformation>
+  <PreRequisiteInfo>
+    <ValidOS>true</ValidOS>
+    <SQLServerInstalled>true</SQLServerInstalled>
+    <SQLClientInstalled>false</SQLClientInstalled>
+    <IISInstalled>true</IISInstalled>
+  </PreRequisiteInfo>
+  <SslEnabled>false</SslEnabled>
+  <InstallInfo>
+    <InstallAction>Install</InstallAction>
+    <InstallMode>Silent</InstallMode>
+    <InstallType>Both</InstallType>
+    <AuthenticationMode>Windows</AuthenticationMode>
+  </InstallInfo>
+  <TransformationServerInfo>
+    <TSConfigFile>Provide inifile path along with name for TS to configure</TSConfigFile>
+    <LogFile>C:\Program Files\Kofax\TotalAgility\Transformation Server\Tslog.txt</LogFile>
+    <InstallLocation>C:\Program Files\Kofax\TotalAgility\Transformation Server</InstallLocation>
+    <WindowsServiceAccount>username</WindowsServiceAccount>
+    <WindowsServicePassword>password</WindowsServicePassword>
+    <UseSpecificPool>false</UseSpecificPool>
+    <PoolName></PoolName>
+    <OLEnabled>true</OLEnabled>
+    <WcfPort>9001</WcfPort>
+    <ReservedSlots>0</ReservedSlots>
+    <OverrideDefSlots></OverrideDefSlots>
+    <MaxSlots>0</MaxSlots>
+    <EnableSyncCalls>true</EnableSyncCalls>
+    <NlpWestern>false</NlpWestern>
+    <NlpWestrenExtended>false</NlpWestrenExtended>
+    <NlpExtended>false</NlpExtended>
+    <InstallOCRAddons>true</InstallOCRAddons>
+  </TransformationServerInfo>
+  <IsIntegrationServer>false</IsIntegrationServer>
+  <InstallLicenseProxy>false</InstallLicenseProxy>
+  <TenantServiceURL>Provide Valid Tenant URL</TenantServiceURL>
+  <SystemSessionId>Provide Valid SessionID</SystemSessionId>
+  <KTAResourceUserName></KTAResourceUserName>
+  <KTAResourcePassword></KTAResourcePassword>
+  <StartServices>true</StartServices>
+  <ImportWorkspacePackage>false</ImportWorkspacePackage>
+  <SiteRoot>Default Web Site</SiteRoot>
+  <IsDocker>false</IsDocker>
+  <IgnoreBrokenFoldersOnUpgrade>false</IgnoreBrokenFoldersOnUpgrade>
+  <RunCaptureMigrationIgnoringErrors>false</RunCaptureMigrationIgnoringErrors>
+  <CaptureConfiguration>
+    <CloudStorageType>SQLServer</CloudStorageType>
+    <AzureBlobStorageConnectionString></AzureBlobStorageConnectionString>
+    <AzureBlobStorageContainerName></AzureBlobStorageContainerName>
+    <AmazonS3AccessKey></AmazonS3AccessKey>
+    <AmazonS3SecretKey></AmazonS3SecretKey>
+    <AmazonS3BucketName></AmazonS3BucketName>
+    <AmazonS3RegionName></AmazonS3RegionName>
+    <FileStreamFileGroup></FileStreamFileGroup>
+	<TrainingSetsFileGroup></TrainingSetsFileGroup>
+  </CaptureConfiguration>
+</ConfigurationEntity>

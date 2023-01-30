@@ -1,0 +1,81 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ConfigurationEntity xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">  
+  <LicenseServer>
+    <LicenseServerName>localhost</LicenseServerName>
+    <PortNumber>3581</PortNumber>
+    <SerialNumber></SerialNumber>
+    <ProductCode></ProductCode>
+    <SkipLicense>true</SkipLicense>
+  </LicenseServer>
+  <IsDatabaseWindowsAuthentication>false</IsDatabaseWindowsAuthentication>
+  <AdditionalHostNameUpdateRequired>false</AdditionalHostNameUpdateRequired>
+  <AdditionalDeploymentHostName></AdditionalDeploymentHostName>
+  <InstallDirectory>C:\Program Files\Kofax\TotalAgility Tenant Management\</InstallDirectory>
+  <SslEnabled>true</SslEnabled>
+  <ApplicationServerName>app server name</ApplicationServerName>
+  <DatabaseInformation>
+    <InstallDatabases>true</InstallDatabases>
+    <OverwriteIfExisting>true</OverwriteIfExisting>
+    <ScriptsLocation>C:\Program Files\Kofax\TotalAgility Tenant Management\DatabaseScripts\SQL Server\</ScriptsLocation>
+    <MasterTenantDatabase>
+      <DatabaseName>MasterTenants</DatabaseName>
+      <Server>Server Name</Server>
+      <SqlScript>
+        <CreateScript>Create_MasterTenants.sql</CreateScript>
+        <DropScript>Drop_MasterTenants.sql</DropScript>
+        <InitializeScript>Initialise_MasterTenants.sql</InitializeScript>
+        <ConversionScript></ConversionScript>
+      </SqlScript>
+      <Security>
+        <WindowsAuthentication>true</WindowsAuthentication>
+        <UserName></UserName>
+        <Password></Password>
+      </Security>
+      <NewDatabase>false</NewDatabase>
+    </MasterTenantDatabase>
+    <DataCentreDatabase>
+      <DatabaseName>DataCenterTenants</DatabaseName>
+      <Server>Server Name</Server>
+      <SqlScript>
+        <CreateScript>Create_DataCenterTenants.sql</CreateScript>
+        <DropScript>Drop_DataCenterTenants.sql</DropScript>
+        <InitializeScript>Initialise_DataCenterTenants.sql</InitializeScript>
+        <ConversionScript></ConversionScript>
+      </SqlScript>
+      <Security>
+        <WindowsAuthentication>true</WindowsAuthentication>
+        <UserName></UserName>
+        <Password></Password>
+      </Security>
+      <NewDatabase>false</NewDatabase>
+    </DataCentreDatabase>
+  </DatabaseInformation>
+  <IdentityInformation>
+    <UserName></UserName>
+    <Password></Password>
+    <RunAsSystemAccount>false</RunAsSystemAccount>
+  </IdentityInformation>
+  <PreRequisiteInfo>
+    <ValidOS>true</ValidOS>
+    <SQLServerInstalled>true</SQLServerInstalled>
+    <SQLClientInstalled>false</SQLClientInstalled>
+    <IISInstalled>true</IISInstalled>
+  </PreRequisiteInfo>
+  <ImportSystemMaps>true</ImportSystemMaps>
+  <InstallInfo>
+    <InstallAction>TenantManagementInstall</InstallAction>
+    <InstallMode>Silent</InstallMode>
+    <InstallType>Both</InstallType>
+  </InstallInfo>
+  <EmailConfig>
+    <HostName></HostName>
+    <PortNumber></PortNumber>
+    <UserName></UserName>
+    <Password></Password>
+    <FromAddress></FromAddress>
+    <BccAddress></BccAddress>
+    <EnableSSL>false</EnableSSL>
+    <InternationalCharacterSupport>false</InternationalCharacterSupport>
+  </EmailConfig>
+  <SiteRoot>Default Web Site</SiteRoot>
+</ConfigurationEntity>
