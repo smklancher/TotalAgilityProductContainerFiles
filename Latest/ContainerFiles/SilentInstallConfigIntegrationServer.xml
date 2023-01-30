@@ -35,6 +35,7 @@
     <InstallType>Both</InstallType>
   </InstallInfo> 
   <IsIntegrationServer>false</IsIntegrationServer>
+  <IsIntegrationServerTargetMultitenanted>true</IsIntegrationServerTargetMultitenanted>
   <TenantId>Provide Valid Tenant URL</TenantId>
   <SystemSessionId>Provide Valid SessionID</SystemSessionId>
   <SiteRoot>Default Web Site</SiteRoot>

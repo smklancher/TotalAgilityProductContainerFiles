@@ -17,15 +17,18 @@
     <ProductCode></ProductCode>
     <SkipLicense>true</SkipLicense>
     <ServerId>1</ServerId>
+	<EnableSSL>false</EnableSSL>
+	<Certificate></Certificate>
   </LicenseServer>
   <IsDatabaseWindowsAuthentication>false</IsDatabaseWindowsAuthentication>
   <InstallDirectory>C:\Program Files\Kofax\TotalAgility\</InstallDirectory>
   <SslEnabled>true</SslEnabled>
-  <InstallTenantManagementWebsite>true</InstallTenantManagementWebsite>
+  <InstallTenantManagementWebsite>false</InstallTenantManagementWebsite>
   <ApplicationServerName>app server name</ApplicationServerName>
   <WebServerName>web server name</WebServerName>
   <LiveHostName></LiveHostName>
   <DevHostName></DevHostName>
+  <AdditionalDeploymentName></AdditionalDeploymentName>
   <CheckDatabaseCompatibility>true</CheckDatabaseCompatibility>
   <DatabaseInformation>
     <InstallDatabases>true</InstallDatabases>
@@ -74,7 +77,7 @@
     <InstallAction>MultiTenancyInstall</InstallAction>
     <InstallMode>Silent</InstallMode>
     <InstallType>Both</InstallType>
-    <MultiTenancyInstallMode>Live</MultiTenancyInstallMode>
+    <MultiTenancyInstallMode>Production</MultiTenancyInstallMode>
     <DatabaseServerType>SQLServerNonSSL</DatabaseServerType>
     <CacheType>InMemory</CacheType>
   </InstallInfo>

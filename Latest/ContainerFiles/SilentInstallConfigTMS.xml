@@ -8,13 +8,15 @@
     <SkipLicense>true</SkipLicense>
   </LicenseServer>
   <IsDatabaseWindowsAuthentication>false</IsDatabaseWindowsAuthentication>
-  <InstallDirectory>C:\Program Files\Kofax\TotalAgility\</InstallDirectory>
+  <AdditionalHostNameUpdateRequired>false</AdditionalHostNameUpdateRequired>
+  <AdditionalDeploymentHostName></AdditionalDeploymentHostName>
+  <InstallDirectory>C:\Program Files\Kofax\TotalAgility Tenant Management\</InstallDirectory>
   <SslEnabled>true</SslEnabled>
-  <ApplicationServerName />
+  <ApplicationServerName>app server name</ApplicationServerName>
   <DatabaseInformation>
     <InstallDatabases>true</InstallDatabases>
     <OverwriteIfExisting>true</OverwriteIfExisting>
-    <ScriptsLocation>C:\Program Files\Kofax\TotalAgility\DatabaseScripts\SQL Server\</ScriptsLocation>
+    <ScriptsLocation>C:\Program Files\Kofax\TotalAgility Tenant Management\DatabaseScripts\SQL Server\</ScriptsLocation>
     <MasterTenantDatabase>
       <DatabaseName>MasterTenants</DatabaseName>
       <Server>Server Name</Server>

@@ -18,6 +18,8 @@
     <ProductCode></ProductCode>
     <SkipLicense>true</SkipLicense>
     <ServerId>1</ServerId>
+	<EnableSSL>false</EnableSSL>
+	<Certificate></Certificate>
   </LicenseServer>
   <InstallDirectory>C:\Program Files\Kofax\TotalAgility\</InstallDirectory>
   <ApplicationServerName> app server name </ApplicationServerName>
@@ -32,6 +34,7 @@
       <Server></Server>
       <Security>
         <WindowsAuthentication>true</WindowsAuthentication>
+		  <AzureActiveDirectoryAuthentication>Off</AzureActiveDirectoryAuthentication>
         <UserName></UserName>
         <Password></Password>
       </Security>
@@ -42,6 +45,7 @@
       <Server>server name</Server>
       <Security>
         <WindowsAuthentication>true</WindowsAuthentication>
+		  <AzureActiveDirectoryAuthentication>Off</AzureActiveDirectoryAuthentication>
         <UserName></UserName>
         <Password></Password>
       </Security>
@@ -52,6 +56,7 @@
       <Server>server name</Server>
       <Security>
         <WindowsAuthentication>true</WindowsAuthentication>
+		  <AzureActiveDirectoryAuthentication>Off</AzureActiveDirectoryAuthentication>
         <UserName></UserName>
         <Password></Password>
       </Security>
@@ -63,6 +68,7 @@
       <Server>server name</Server>
       <Security>
         <WindowsAuthentication>true</WindowsAuthentication>
+		  <AzureActiveDirectoryAuthentication>Off</AzureActiveDirectoryAuthentication>
         <UserName></UserName>
         <Password></Password>
       </Security>
@@ -73,6 +79,7 @@
       <Server>server name</Server>
       <Security>
         <WindowsAuthentication>true</WindowsAuthentication>
+		  <AzureActiveDirectoryAuthentication>Off</AzureActiveDirectoryAuthentication>
         <UserName></UserName>
         <Password></Password>
       </Security>
@@ -83,6 +90,7 @@
       <Server>server name</Server>
       <Security>
         <WindowsAuthentication>true</WindowsAuthentication>
+		  <AzureActiveDirectoryAuthentication>Off</AzureActiveDirectoryAuthentication>
         <UserName></UserName>
         <Password></Password>
       </Security>
@@ -148,5 +156,6 @@
     <AmazonS3BucketName></AmazonS3BucketName>
     <AmazonS3RegionName></AmazonS3RegionName>
     <FileStreamFileGroup></FileStreamFileGroup>
+	<TrainingSetsFileGroup></TrainingSetsFileGroup>
   </CaptureConfiguration>
 </ConfigurationEntity>
