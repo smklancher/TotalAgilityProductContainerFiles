@@ -13,8 +13,8 @@
   <InstallDirectory>C:\Program Files\Kofax\TotalAgility Tenant Management\</InstallDirectory>
   <SslEnabled>true</SslEnabled>
   <ApplicationServerName>app server name</ApplicationServerName>
+  <UpdateDatabases>true</UpdateDatabases>
   <DatabaseInformation>
-    <InstallDatabases>true</InstallDatabases>
     <OverwriteIfExisting>true</OverwriteIfExisting>
     <ScriptsLocation>C:\Program Files\Kofax\TotalAgility Tenant Management\DatabaseScripts\SQL Server\</ScriptsLocation>
     <MasterTenantDatabase>

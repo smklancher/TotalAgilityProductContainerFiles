@@ -23,9 +23,8 @@
   </LicenseServer>
   <InstallDirectory>C:\Program Files\Kofax\TotalAgility\</InstallDirectory>
   <ApplicationServerName> app server name </ApplicationServerName>
-  <CheckDatabaseCompatibility>true</CheckDatabaseCompatibility>
-  <DatabaseInformation>
-    <InstallDatabases>true</InstallDatabases>
+	<UpdateDatabases>true</UpdateDatabases>
+	<DatabaseInformation>
     <OverwriteIfExisting>false</OverwriteIfExisting>
     <ScriptsLocation>C:\Program Files\Kofax\TotalAgility\DatabaseScripts\SQL Server\</ScriptsLocation>
     <TenantSettings />
@@ -131,8 +130,9 @@
     <MaxSlots>0</MaxSlots>
     <EnableSyncCalls>true</EnableSyncCalls>
     <NlpWestern>false</NlpWestern>
-    <NlpWestrenExtended>false</NlpWestrenExtended>
-    <NlpExtended>false</NlpExtended>
+	<NlpAdditionalLanguages1>false</NlpAdditionalLanguages1>
+    <NlpAdditionalLanguages2>false</NlpAdditionalLanguages2>
+	<NlpAdditionalLanguages3>false</NlpAdditionalLanguages3>
     <InstallOCRAddons>true</InstallOCRAddons>
   </TransformationServerInfo>
   <IsIntegrationServer>false</IsIntegrationServer>

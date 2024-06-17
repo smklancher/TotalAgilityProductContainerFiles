@@ -29,9 +29,8 @@
   <LiveHostName></LiveHostName>
   <DevHostName></DevHostName>
   <AdditionalDeploymentName></AdditionalDeploymentName>
-  <CheckDatabaseCompatibility>true</CheckDatabaseCompatibility>
+  <UpdateDatabases>true</UpdateDatabases>
   <DatabaseInformation>
-    <InstallDatabases>true</InstallDatabases>
     <OverwriteIfExisting>false</OverwriteIfExisting>
     <ScriptsLocation>C:\Program Files\Kofax\TotalAgility\DatabaseScripts\SQL Server\</ScriptsLocation>
     <TenantSettings />
@@ -105,9 +104,10 @@
     <OverrideDefSlots></OverrideDefSlots>
     <MaxSlots>0</MaxSlots>
     <EnableSyncCalls>true</EnableSyncCalls>
-    <NlpWestern>false</NlpWestern>
-    <NlpWestrenExtended>false</NlpWestrenExtended>
-    <NlpExtended>false</NlpExtended>
+	<NlpWestern>false</NlpWestern>
+	<NlpAdditionalLanguages1>false</NlpAdditionalLanguages1>
+	<NlpAdditionalLanguages2>false</NlpAdditionalLanguages2>
+	<NlpAdditionalLanguages3>false</NlpAdditionalLanguages3>
     <InstallOCRAddons>true</InstallOCRAddons>
   </TransformationServerInfo>
   <StartServices>true</StartServices>
