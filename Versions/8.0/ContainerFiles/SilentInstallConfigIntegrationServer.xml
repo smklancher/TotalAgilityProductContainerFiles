@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ConfigurationEntity xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <ServicesInstallOptions>
+    <ImportServiceInstance2>false</ImportServiceInstance2>
+    <ImportServiceInstance3>false</ImportServiceInstance3>
+  </ServicesInstallOptions>
+  <LicenseServer>
+    <LicenseServerName>localhost</LicenseServerName>
+    <PortNumber>3581</PortNumber>
+    <SerialNumber></SerialNumber>
+    <ProductCode></ProductCode>
+    <SkipLicense>true</SkipLicense>
+  </LicenseServer>
+  <InstallDirectory>C:\Program Files\Kofax\TotalAgility\</InstallDirectory>
+  <ApplicationServerName />
+  <DatabaseInformation>
+  </DatabaseInformation>
+  <IdentityInformation>
+    <UserName></UserName>
+    <Password></Password>
+    <RunAsSystemAccount>true</RunAsSystemAccount>
+    <RunAsNetworkServiceAccount>false</RunAsNetworkServiceAccount>
+  </IdentityInformation>
+  <PreRequisiteInfo>
+    <ValidOS>true</ValidOS>
+    <SQLServerInstalled>true</SQLServerInstalled>
+    <SQLClientInstalled>false</SQLClientInstalled>
+    <IISInstalled>true</IISInstalled>
+  </PreRequisiteInfo>
+  <ImportSystemMaps>true</ImportSystemMaps>
+  <SslEnabled>true</SslEnabled>
+  <InstallInfo>
+    <InstallAction>IntegrationServerInstall</InstallAction>
+    <InstallMode>Silent</InstallMode>
+    <InstallType>Both</InstallType>
+  </InstallInfo> 
+  <IsIntegrationServer>false</IsIntegrationServer>
+  <IsIntegrationServerTargetMultitenanted>true</IsIntegrationServerTargetMultitenanted>
+  <TenantId>Provide Valid Tenant URL</TenantId>
+  <SystemSessionId>Provide Valid SessionID</SystemSessionId>
+  <SiteRoot>Default Web Site</SiteRoot>
+  <ValidateTenant>true</ValidateTenant>
+</ConfigurationEntity>
