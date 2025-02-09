@@ -9,7 +9,7 @@
 #>
 
 param (
-   [string]$configPath = "C:\Program Files\Kofax\TotalAgility\"    
+   [string]$configPath = "C:\Program Files\Tungsten\TotalAgility\"    
 )
 
 # all kta env variable will start with KTA_ prefix
@@ -59,7 +59,7 @@ Param ([string]$searchKey)
 		# for Tenant management web.config path needs to be appended bug 1884081.
 		if($currentFileName.Contains("Agility.Server.Web.TenantManagement"))
         {
-			$currentFileName = "C:\Program Files\Kofax\TotalAgility Tenant Management\"  + $currentFileName;
+			$currentFileName = "C:\Program Files\Tungsten\TotalAgility Tenant Management\"  + $currentFileName;
         }
 
         # for regasc path will be appended
@@ -152,7 +152,7 @@ function Update-License-Config {
 		return
 	}
 
-	$fileName = "C:\Program Files (x86)\Kofax\TotalAgility\LicenseServer\KSALicenseService.exe.config"
+	$fileName = "C:\Program Files (x86)\Tungsten\TotalAgility\LicenseServer\KSALicenseService.exe.config"
 	if(Test-Path -Path $fileName)
 	{
 		$xmlDoc = [System.Xml.XmlDocument](Get-Content $fileName);

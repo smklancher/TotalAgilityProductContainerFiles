@@ -12,11 +12,11 @@ $dapapiProvider = "DPAPI"
 $rsaProvider = "RSA"
 
 # Required installation and config file location
-$installationDir = "C:\Program Files\Kofax\TotalAgility\"
+$installationDir = "C:\Program Files\Tungsten\TotalAgility\"
 $transformationInstallationDir = $installationDir + "Transformation Server\"
-$LicenseServerDir = "C:\Program Files (x86)\Kofax\TotalAgility\LicenseServer"
+$LicenseServerDir = "C:\Program Files (x86)\Tungsten\TotalAgility\LicenseServer"
 
-$keyFileExportLocation_Const = "c:\KTA\PowerShellScripts\"
+$keyFileExportLocation_Const = "c:\TA\PowerShellScripts\"
 $keyFileName_Const = "totalAgilityKeysFile.xml"
 $frameworkLocation_Const = "C:\windows\Microsoft.Net\Framework64\v4.0.30319\"
 
@@ -35,8 +35,8 @@ $exportWorkerConfigFile = "Agility.Server.Core.ExportWorker.Host.exe.config"
 $streamingServiceConfigFile = "Agility.Server.StreamingService.exe.config"
 $reportingServiceAzureConfigFile = "Kofax.CEBPM.Reporting.AzureETL.exe.config"
 $reportingServiceTAServiceConfigFile = "Kofax.CEBPM.Reporting.TAService.exe.config"
-$transformationServiceHostConfigFile = "Kofax.CEBPM.CPUServer.ServiceHost.exe.config"
-$transformationServiceDocConvSrvConfigFile = "Kofax.CEBPM.DocumentConversionService.Host.exe.config"
+$transformationServiceHostConfigFile = "Transformation.ServiceHost.exe.config"
+$transformationServiceDocConvSrvConfigFile = "DocumentConversionService.Host.exe.config"
 $licensingServiceDocConvSrvConfigFile = "KSALicenseService.exe.config"
 
 # RSA encryption paramters
@@ -51,7 +51,7 @@ $totalAgilityserviceUser_Const = "NT Authority\system"
 ###########################
 
 function init([string] $targetLocation) {
-    Copy-Item -Path "c:\KTA\PowerShellScripts\Kofax.CEBPM.EncryptConfig.exe" -destination $targetLocation -Force
+    Copy-Item -Path "c:\TA\PowerShellScripts\TotalAgility.EncryptConfig.exe" -destination $targetLocation -Force
 }
 
 ###############################################
@@ -109,7 +109,7 @@ function DPAPIEncryption ([string] $exeConfigFileName, [string] $exeConfigFileLo
 		{
 			"DPAPI Encrypting " + $filePath + " config file"
 			AddSecurityProvider $exeConfigFileName $exeConfigFileLocation
-			.\Kofax.CEBPM.EncryptConfig.exe -f $exeConfigFileName -s $section -p DPAPIProtection -enc
+			.\TotalAgility.EncryptConfig.exe -f $exeConfigFileName -s $section -p DPAPIProtection -enc
 		}
 	}
 }
@@ -134,7 +134,7 @@ function PrepareRSAContainerFile ([string] $RSAContainerFile, [string] $framewor
 
 		# Encrypt the file
 		Set-Location $exeConfigFileLocation
-		.\Kofax.CEBPM.EncryptConfig.exe -f $exeConfigFileName -s $section -p RSAProvider -enc
+		.\TotalAgility.EncryptConfig.exe -f $exeConfigFileName -s $section -p RSAProvider -enc
 
 		# Export the key
 		$ExportedKeyFile = $keyFileExportLocation + "\" + $keyFileName 

@@ -2,16 +2,16 @@
 	# Checking for non-default value of CCMServerURL app setting
 	if ($_.value -ne "{http://ccmserver:port}")
 	{	
-		if(Test-Path -path "C:\Program Files\Kofax\TotalAgility\KCMProxyInstallation\Setup.exe")
+		if(Test-Path -path "C:\Program Files\Tungsten\TotalAgility\KCMProxyInstallation\Setup.exe")
 		{
 			$kcmserverurl = $_.value
 			Write-Host ("Configuring KCMProxy with the URL $kcmserverurl")
-			$proc = Start-Process "C:\Program Files\Kofax\TotalAgility\KCMProxyInstallation\Setup.exe" -ArgumentList '/silent',$kcmserverurl -Wait -PassThru
+			$proc = Start-Process "C:\Program Files\Tungsten\TotalAgility\KCMProxyInstallation\Setup.exe" -ArgumentList '/silent',$kcmserverurl -Wait -PassThru
 			if ($proc.ExitCode -ne 0)
 			{
 				# Check for KCM proxy install failure and show log to user
 				Write-Host("Error occured while configuring the KCM Proxy please refer to the log file below for more details")
-				get-content "C:\users\ContainerAdministrator\desktop\KofaxTotalAgilityCCMServerInstallErrorLog.txt"
+				get-content "C:\users\ContainerAdministrator\desktop\TungstenTotalAgilityCCMServerInstallErrorLog.txt"
 			}
 		}
 	}

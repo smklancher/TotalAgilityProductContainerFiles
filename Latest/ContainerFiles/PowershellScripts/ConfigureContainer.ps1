@@ -1,27 +1,27 @@
 ﻿# install prerequisites for TA
 $IIS = Get-WindowsOptionalFeature -Online -FeatureName “IIS-WebServer”
 filter timestamp {"$(Get-Date -Format G): $_"}
-write-output "Install prerequisites for KTA" | timestamp
-Invoke-Expression C:\KTA\PowershellScripts\InstallWindowsFeatures.ps1
+write-output "Install prerequisites for TA" | timestamp
+Invoke-Expression C:\TA\PowershellScripts\InstallWindowsFeatures.ps1
 
 filter timestamp {"$(Get-Date -Format G): $_"}
-write-output "Add Admin user for KTA" | timestamp
+write-output "Add Admin user for TA" | timestamp
 
-# Add KTA_Admin account local system 
-Invoke-Expression C:\KTA\PowershellScripts\AddAdminUser.ps1
-Invoke-Expression C:\KTA\PowershellScripts\UpdateAdminUser.ps1
+# Add TA_Admin account local system 
+Invoke-Expression C:\TA\PowershellScripts\AddAdminUser.ps1
+Invoke-Expression C:\TA\PowershellScripts\UpdateAdminUser.ps1
 
 if($IIS.State -eq "Enabled")
 {
 	# Install self signed cert
 	filter timestamp {"$(Get-Date -Format G): $_"}
 	write-output "Install Self signed cert" | timestamp
-	Invoke-Expression C:\KTA\PowershellScripts\CreateHttpsCert.ps1;
+	Invoke-Expression C:\TA\PowershellScripts\CreateHttpsCert.ps1;
 }
 	
 # Deleting Transformation Designer folder
 $strings=@("TransformationDesigner*")
-get-childitem -path "C:\KTA\" -Include ($strings) -Recurse -force | ForEach-Object {
+get-childitem -path "C:\TA\" -Include ($strings) -Recurse -force | ForEach-Object {
     try {
 		#  -ErrorAction Ignore is being used to suppress known issue in Docker on Windows Server 2016 with deletion
         Remove-Item $_ -Force –Recurse -ErrorAction Ignore
@@ -71,46 +71,46 @@ filter timestamp {"$(Get-Date -Format G): $_"}
 write-output "Start silent Install" | timestamp
 
 # -passthru is used to get output from the command
-if(Test-Path -path "C:\KTA\TotalAgilityInstall\setup.exe") {
-$proc = Start-Process C:\KTA\TotalAgilityInstall\setup.exe -argumentlist '/silent' -wait -PassThru
+if(Test-Path -path "C:\TA\TotalAgilityInstall\setup.exe") {
+$proc = Start-Process C:\TA\TotalAgilityInstall\setup.exe -argumentlist '/silent' -wait -PassThru
 
 # Copying Encrypt utility to powershellscripts folder
-Copy-Item "C:\KTA\Utilities\Kofax.CEBPM.EncryptConfig.exe" "C:\KTA\PowershellScripts\Kofax.CEBPM.EncryptConfig.exe"
-$silentConfig = "C:\KTA\TotalAgilityInstall\SilentInstallConfig.xml"
+Copy-Item "C:\TA\Utilities\TotalAgility.EncryptConfig.exe" "C:\TA\PowershellScripts\TotalAgility.EncryptConfig.exe"
+$silentConfig = "C:\TA\TotalAgilityInstall\SilentInstallConfig.xml"
 }
-elseif(Test-Path -path "C:\KTA\OnPremiseMultiTenancyInstall\setup.exe") {
-$proc = Start-Process C:\KTA\OnPremiseMultiTenancyInstall\setup.exe -argumentlist '/silent' -wait -PassThru
+elseif(Test-Path -path "C:\TA\OnPremiseMultiTenancyInstall\setup.exe") {
+$proc = Start-Process C:\TA\OnPremiseMultiTenancyInstall\setup.exe -argumentlist '/silent' -wait -PassThru
 
 # Copying Encrypt utility to powershellscripts folder
-Copy-Item "C:\KTA\Utilities\Kofax.CEBPM.EncryptConfig.exe" "C:\KTA\PowershellScripts\Kofax.CEBPM.EncryptConfig.exe"
-$silentConfig = "C:\KTA\OnPremiseMultiTenancyInstall\SilentInstallConfig.xml"
+Copy-Item "C:\TA\Utilities\TotalAgility.EncryptConfig.exe" "C:\TA\PowershellScripts\TotalAgility.EncryptConfig.exe"
+$silentConfig = "C:\TA\OnPremiseMultiTenancyInstall\SilentInstallConfig.xml"
 }
-elseif(Test-Path -path "C:\KTA\IntegrationServerInstall\setup.exe") {
-$proc = Start-Process C:\KTA\IntegrationServerInstall\setup.exe -argumentlist '/silent' -wait -PassThru
+elseif(Test-Path -path "C:\TA\IntegrationServerInstall\setup.exe") {
+$proc = Start-Process C:\TA\IntegrationServerInstall\setup.exe -argumentlist '/silent' -wait -PassThru
 
 # Copying Encrypt utility to powershellscripts folder
-Copy-Item "C:\KTA\Utilities\Kofax.CEBPM.EncryptConfig.exe" "C:\KTA\PowershellScripts\Kofax.CEBPM.EncryptConfig.exe"
+Copy-Item "C:\TA\Utilities\TotalAgility.EncryptConfig.exe" "C:\TA\PowershellScripts\TotalAgility.EncryptConfig.exe"
 }
 
 # CopyFonts for OP and OPMT if install transformation service is true
 if ($silentConfig -ne $null) {
     $xmlDoc = [System.Xml.XmlDocument](Get-Content $silentConfig);
-    if (($xmlDoc.ConfigurationEntity.ServicesInstallOptions.TransformationService -eq $true) -And (Test-Path -path "C:\KTA\PowershellScripts\Fonts")) {
-	     Invoke-Expression C:\KTA\PowershellScripts\InstallFonts.ps1
+    if (($xmlDoc.ConfigurationEntity.ServicesInstallOptions.TransformationService -eq $true) -And (Test-Path -path "C:\TA\PowershellScripts\Fonts")) {
+	     Invoke-Expression C:\TA\PowershellScripts\InstallFonts.ps1
 		 write-output "Windows fonts copied successfully." | timestamp
 	}
 }
 
-# Setting the KTA service startup type to manual to prevent automatic startup of services during container creation
+# Setting the TA service startup type to manual to prevent automatic startup of services during container creation
 	Get-Service| ForEach-Object {	
-    if ($_.DisplayName.StartsWith("Kofax")) {
+    if ($_.DisplayName.StartsWith("Kofax") -or $_.DisplayName.StartsWith("Tungsten")) {
         Set-Service -Name  $_.Name -StartupType Manual -Status "Stopped" -PassThru;        
 	}
 }
 if ($proc.ExitCode -ne 0) {
 	filter timestamp {"$(Get-Date -Format G): $_"}
 	Write-output "Install failed with errors" | timestamp
-    Get-ChildItem -Path "C:\Users\ContainerAdministrator\Desktop" | Where-Object {$_.Name.StartsWith("KofaxTotalAgility")} | ForEach-Object {get-content $_.FullName}
+    Get-ChildItem -Path "C:\Users\ContainerAdministrator\Desktop" | Where-Object {$_.Name.StartsWith("TungstenTotalAgility")} | ForEach-Object {get-content $_.FullName}
 }
 elseif ($proc.ExitCode -eq 0) {	
 	filter timestamp {"$(Get-Date -Format G): $_"}
@@ -118,9 +118,9 @@ elseif ($proc.ExitCode -eq 0) {
 	filter timestamp {"$(Get-Date -Format G): $_"}
 	Write-output "Delete installation media" | timestamp
 	# Deleting Installation media since installation was successful	
-	Get-ChildItem -Path  "C:\KTA\" -Recurse -exclude SilentInstallConfig.xml | 
+	Get-ChildItem -Path  "C:\TA\" -Recurse -exclude SilentInstallConfig.xml | 
 	Select -ExpandProperty FullName | 
-	Where {$_ -notlike "C:\KTA\PowershellScripts*"} | 
+	Where {$_ -notlike "C:\TA\PowershellScripts*"} | 
 	sort length -Descending | 
 	ForEach-Object {
 	try {

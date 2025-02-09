@@ -63,7 +63,7 @@ if($service -ne $null)
 
 Get-Service| ForEach-Object {
 
-    if ($_.DisplayName.StartsWith("Kofax")) {
+    if ($_.DisplayName.StartsWith("Tungsten") -or $_.DisplayName.StartsWith("Kofax")) {
         $service = $_;        
         Write-Host($service.DisplayName);
         StartService -serviceName $_.Name -status $_.Status;

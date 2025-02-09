@@ -1,4 +1,4 @@
-﻿$sFontsFolder = "C:\KTA\PowershellScripts\Fonts";
+﻿$sFontsFolder = "C:\TA\PowershellScripts\Fonts";
 $sRegPath = "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts";
 
 $objShell = New-Object -ComObject Shell.Application;

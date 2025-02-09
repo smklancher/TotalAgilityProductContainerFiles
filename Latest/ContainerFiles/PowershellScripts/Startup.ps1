@@ -1,5 +1,5 @@
 ﻿param (
-   [string]$configPath = "C:\Program Files\Kofax\TotalAgility\"   
+   [string]$configPath = "C:\Program Files\Tungsten\TotalAgility\"   
 )
 
 # get current script path
@@ -57,11 +57,6 @@ Invoke-Expression "$scriptPath";
 # Encrypt the config files
 Invoke-Expression "$currentPath\CryptoConfigFiles.ps1";
 
-# Uncomment the below code to install legacy wrappers
-#if (Test-path -Path 'C:\Program Files\Kofax\TotalAgility\LegacyWrappers\WrapperInstaller.exe')
-#{
-#	'C:\Program Files\Kofax\TotalAgility\LegacyWrappers\WrapperInstaller.exe'
-#}
 
 $sleep = 500
 while ($true)

@@ -10,7 +10,7 @@ $opmtURL = "https://{C:1}."+ $opmtapp +"/TotalAgility/services/core/{R:1}";
 }
 # Getting opmt web config file and loading it as XML to update it
 {
-$filename = "C:\Program Files\Kofax\TotalAgility\Agility.Server.Web\Web.config";
+$filename = "C:\Program Files\Tungsten\TotalAgility\Agility.Server.Web\Web.config";
 $doc = (Get-Content $filename) -as [Xml];
 }
 # Create new elements and corresponding attribute values for them
