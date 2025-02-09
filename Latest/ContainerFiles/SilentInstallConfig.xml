@@ -21,12 +21,12 @@
 	<EnableSSL>false</EnableSSL>
 	<Certificate></Certificate>
   </LicenseServer>
-  <InstallDirectory>C:\Program Files\Kofax\TotalAgility\</InstallDirectory>
+  <InstallDirectory>C:\Program Files\Tungsten\TotalAgility\</InstallDirectory>
   <ApplicationServerName> app server name </ApplicationServerName>
 	<UpdateDatabases>true</UpdateDatabases>
 	<DatabaseInformation>
     <OverwriteIfExisting>false</OverwriteIfExisting>
-    <ScriptsLocation>C:\Program Files\Kofax\TotalAgility\DatabaseScripts\SQL Server\</ScriptsLocation>
+    <ScriptsLocation>C:\Program Files\Tungsten\TotalAgility\DatabaseScripts\SQL Server\</ScriptsLocation>
     <TenantSettings />
     <Main>
       <DatabaseName>TotalAgility</DatabaseName>
@@ -36,6 +36,8 @@
 		  <AzureActiveDirectoryAuthentication>Off</AzureActiveDirectoryAuthentication>
         <UserName></UserName>
         <Password></Password>
+		<ManagedIdentityName></ManagedIdentityName>
+		<ManagedIdentityClientId></ManagedIdentityClientId>
       </Security>
       <NewDatabase>false</NewDatabase>
     </Main>
@@ -47,6 +49,8 @@
 		  <AzureActiveDirectoryAuthentication>Off</AzureActiveDirectoryAuthentication>
         <UserName></UserName>
         <Password></Password>
+		<ManagedIdentityName></ManagedIdentityName>
+		<ManagedIdentityClientId></ManagedIdentityClientId>
       </Security>
       <NewDatabase>false</NewDatabase>
     </Audit>
@@ -58,6 +62,8 @@
 		  <AzureActiveDirectoryAuthentication>Off</AzureActiveDirectoryAuthentication>
         <UserName></UserName>
         <Password></Password>
+		<ManagedIdentityName></ManagedIdentityName>
+		<ManagedIdentityClientId></ManagedIdentityClientId>
       </Security>
       <NewDatabase>false</NewDatabase>
     </FinishedJobs>
@@ -70,6 +76,8 @@
 		  <AzureActiveDirectoryAuthentication>Off</AzureActiveDirectoryAuthentication>
         <UserName></UserName>
         <Password></Password>
+		<ManagedIdentityName></ManagedIdentityName>
+		<ManagedIdentityClientId></ManagedIdentityClientId>
       </Security>
       <NewDatabase>false</NewDatabase>
     </DataLayer>
@@ -81,6 +89,8 @@
 		  <AzureActiveDirectoryAuthentication>Off</AzureActiveDirectoryAuthentication>
         <UserName></UserName>
         <Password></Password>
+		<ManagedIdentityName></ManagedIdentityName>
+		<ManagedIdentityClientId></ManagedIdentityClientId>
       </Security>
       <NewDatabase>false</NewDatabase>
     </ReportingAnalytics>
@@ -92,6 +102,8 @@
 		  <AzureActiveDirectoryAuthentication>Off</AzureActiveDirectoryAuthentication>
         <UserName></UserName>
         <Password></Password>
+		<ManagedIdentityName></ManagedIdentityName>
+		<ManagedIdentityClientId></ManagedIdentityClientId>
       </Security>
       <NewDatabase>false</NewDatabase>
     </ReportingStaging>
@@ -117,8 +129,8 @@
   </InstallInfo>
   <TransformationServerInfo>
     <TSConfigFile>Provide inifile path along with name for TS to configure</TSConfigFile>
-    <LogFile>C:\Program Files\Kofax\TotalAgility\Transformation Server\Tslog.txt</LogFile>
-    <InstallLocation>C:\Program Files\Kofax\TotalAgility\Transformation Server</InstallLocation>
+    <LogFile>C:\Program Files\Tungsten\TotalAgility\Transformation Server\Tslog.txt</LogFile>
+    <InstallLocation>C:\Program Files\Tungsten\TotalAgility\Transformation Server</InstallLocation>
     <WindowsServiceAccount>username</WindowsServiceAccount>
     <WindowsServicePassword>password</WindowsServicePassword>
     <UseSpecificPool>false</UseSpecificPool>
